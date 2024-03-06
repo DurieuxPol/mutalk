@@ -725,8 +725,14 @@ MTAnalysis >> testCasesFrom: aClassCollection [
 { #category : 'tests' }
 MTAnalysis >> testCasesReferencesFrom: testClass [
 
-	^ testClass allTestSelectors collect: [ :each |
-		  MTTestCaseReference for: each in: testClass ]
+	^ testClass buildSuite tests collect: [ :each |
+		  (each class allSuperclasses includes: ParametrizedTestCase)
+			  ifTrue: [
+				  MTTestCaseReference
+					  for: each selector
+					  in: each class
+					  withParameters: each parametersToUse ]
+			  ifFalse: [ MTTestCaseReference for: each selector in: each class ] ]
 ]
 
 { #category : 'accessing' }

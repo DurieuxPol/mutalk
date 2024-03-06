@@ -4,7 +4,8 @@ Class {
 	#instVars : [
 		'class',
 		'selector',
-		'lastTimeToRun'
+		'lastTimeToRun',
+		'parametersToUse'
 	],
 	#category : 'MuTalk-Model-Core',
 	#package : 'MuTalk-Model',
@@ -14,6 +15,15 @@ Class {
 { #category : 'instance creation' }
 MTTestCaseReference class >> for: aSelector in: aClass [ 
 	^self new initializeFor: aSelector in: aClass
+]
+
+{ #category : 'instance creation' }
+MTTestCaseReference class >> for: aSelector in: aClass withParameters: parameters [
+
+	^ self new
+		  initializeFor: aSelector
+		  in: aClass
+		  withParameters: parameters
 ]
 
 { #category : 'instance creation' }
@@ -40,6 +50,14 @@ MTTestCaseReference >> hash [
 MTTestCaseReference >> initializeFor: aSelector in: aClass [
 	class := aClass.
 	selector := aSelector.
+]
+
+{ #category : 'initialize' }
+MTTestCaseReference >> initializeFor: aSelector in: aClass withParameters: parameters [
+
+	class := aClass.
+	selector := aSelector.
+	parametersToUse := parameters
 ]
 
 { #category : 'accessing' }
